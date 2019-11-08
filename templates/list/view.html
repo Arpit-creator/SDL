@@ -1,0 +1,32 @@
+{% extends 'templates/../base.html' %}
+
+{% block content %}
+{% load static %}
+	<link href="{% static '.\list\css\view.css' %}" rel="stylesheet">
+	<body>
+		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+			<a class="navbar-brand" href="{% url 'home:home' %}">← Back</a>
+		</nav>
+		<main class="content">
+			<form class="add-item-form" method="post" action="{% url 'list:add_itm' list.id %}">
+				{% csrf_token %}
+				<h1>{{ list.heading }}</h1>
+				<input type="text" name="item-value" class="new-item-value" autofocus>
+				<button type="submit"><img src="{% static '.\list\images\view\add-item-icon.png' %}" height="32" width="32"></button>
+			</form>
+			<ul class="lists">
+				{% for item in items_of_list %}
+					<li>
+						{% if item.done %}
+							<div class="item itm-done"><span>{{ item.value }}</span></div>
+						{% else %}
+							<a href="{% url 'list:done_itm' item.id %}" class="done-item-link"><div class="item itm-not-done"><span>{{ item.value }}</span></div></a>
+						{% endif %}
+						<a href="{% url 'list:remove_itm' item.id %}"><img src="{% static '.\list\images\view\remove-icon.png' %}" height="32" width="32" class="remove-item-icon"></a>
+					</li>
+				{% endfor %}
+			</ul>
+		</main>
+		<script type="text/javascript" src="{% static '.\list\js\view.js' %}"></script>
+	</body>
+{% endblock %}

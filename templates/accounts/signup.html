@@ -1,0 +1,30 @@
+{% extends 'templates/../base.html' %}
+
+{% block content %}
+{% load static %}
+<link href="{% static './accounts/signup.css' %}" rel="stylesheet">
+<form class="form-signup" action="{% url 'accounts:signup' %}" method="post">
+  {% csrf_token %}
+  <img class="mb-4" src="{% static './base/images/icon.png' %}" alt="" width="72" height="72">
+  {% for message in messages %}
+    {% if 'error' in message.tags %}
+      <div class="alert alert-danger" role="alert">{{ message }}</div>
+    {% endif %}
+  {% endfor %}
+  <h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>
+  <label for="inputUsername" class="sr-only">Username</label>
+  <input type="text" id="inputEmail" name="username" class="form-control username" placeholder="Username" required autofocus>
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input type="password" name="password" id="inputPassword" class="form-control password" placeholder="Password" required>
+  <label for="inputPassword" class="sr-only">Confirm Password</label>
+  <input type="password" name="confirm-password" id="confirmPassword" class="form-control confirm-password" placeholder="Confirm Password" required>
+  <div class="checkbox mb-3">
+  <label>
+    <input type="checkbox" value="remember-me" class="remember-me-cbox" class="remember-me-cbox"> Remember me
+  </label>
+  </div>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+  <span>Already have a SDL account ? </span><a href="{% url 'accounts:signin' %}">Sign In</a>
+  <p class="mt-5 mb-3 text-muted">&copy; 2019-2020</p>
+</form>
+{% endblock %}

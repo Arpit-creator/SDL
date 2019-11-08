@@ -1,0 +1,28 @@
+{% extends 'templates/../base.html' %}
+
+{% block content %}
+{% load static %}
+<link href="{% static './accounts/signin.css' %}" rel="stylesheet">
+<form class="form-signin" action="{% url 'accounts:signin' %}" method="post">
+   {% csrf_token %}
+  <img class="mb-4" src="{% static './base/images/icon.png' %}" alt="" width="72" height="72">
+  {% for message in messages %}
+    {% if 'error' in message.tags %}
+      <div class="alert alert-danger" role="alert">{{ message }}</div>
+    {% endif %}
+  {% endfor %}
+  <h1 class="h3 mb-3 font-weight-normal">Sign In</h1>
+  <label for="inputUsername" class="sr-only">Username</label>
+  <input type="text" name="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+  <div class="checkbox mb-3">
+  <label>
+    <input type="checkbox" value="remember-me" class="remember-me-cbox" class="remember-me-cbox"> Remember me
+  </label>
+  </div>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+  <span>Don't have a SDL account ? </span><a href="{% url 'accounts:signup' %}">Create One</a>
+  <p class="mt-5 mb-3 text-muted">&copy; 2019-2020</p>
+</form>
+{% endblock %}
